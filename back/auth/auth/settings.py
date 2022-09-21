@@ -39,11 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    # drf 및 jwt 관련 추가
     'rest_framework',
     'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
+    # cors headers 미들웨어 추가
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -126,15 +129,21 @@ STATIC_URL = '/static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+# cors 설정(다른 포트 간의 소통을 위해)
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:5500', 'http://localhost:5500']
+CORS_ALLOW_CREDENTIALS = True
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# drf 관련 설정
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        # 인가는 기본 설정으로
+        # 인가는 기본(회원가입되어 있는지만 체크)으로
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 인증은 JWT를 이용
+        # 인증은 기본적으로 JWT를 이용
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',

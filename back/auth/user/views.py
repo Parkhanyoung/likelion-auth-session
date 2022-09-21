@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+import json
 
 # Create your views here.
 
@@ -15,8 +16,9 @@ class PublicUserAPIView(APIView):
     permission_classes = []
 
     def post(self, request):
-        username = request.data['username']
-        password = request.data['password']
+        data = json.loads(request.body)
+        username = data['username']
+        password = data['password']
         created_user = User.objects.create_user(
             username=username, password=password)
         context = {
@@ -31,8 +33,9 @@ class ObtainTokenAPIView(APIView):
     permission_classes = []
 
     def post(self, request):
-        username = request.data['username']
-        password = request.data['password']
+        data = json.loads(request.body)
+        username = data['username']
+        password = data['password']
 
         user = authenticate(username=username, password=password)
         # 인증 실패시
@@ -44,12 +47,19 @@ class ObtainTokenAPIView(APIView):
             'access': str(refresh.access_token),
             'refresh': str(refresh)
         }
-        return Response(context, status=status.HTTP_200_OK)
+        return Response(context, status=status.HTTP_201_CREATED)
 
 
 class UserVerifyAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        console.log(request.user)
-        return Response(status=status.HTTP_200_OK)
+        if not request.user.is_superuser:
+            context = {
+                'msg': '일반 user입니다!'
+            }
+            return Response(context, status=status.HTTP_200_OK)
+        context = {
+            'msg': 'superuser입니다!'
+        }
+        return Response(context, status=status.HTTP_200_OK)

@@ -9,5 +9,6 @@ urlpatterns = [
     path('token/', ObtainTokenAPIView.as_view()),
     # Refresh Token을 가지고 Access Token 발급
     path('token/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
+    # user 인증 수행
     path('verify/', UserVerifyAPIView.as_view())
 ]

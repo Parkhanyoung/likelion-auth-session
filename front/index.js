@@ -6,14 +6,8 @@ const $SignupPasswordInput = $('signup-password');
 const $TokenUsernameInput = $('token-username');
 const $TokenPasswordInput = $('token-password');
 
-const $AccessTokenInput = $('access-token');
-
-const $RefreshTokenInput = $('refresh-token');
-
 const $SignupBtn = $('signup-btn');
 const $CreateTokenBtn = $('create-token-btn');
-const $AuthenticateBtn = $('authenticate-btn');
-const $RefreshBtn = $('refresh-btn');
 
 const SERVER_URL = 'http://localhost:8000/user/';
 

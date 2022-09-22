@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    # corsheaders 관련 추가
+    'corsheaders',
     # drf 및 jwt 관련 추가
     'rest_framework',
     'rest_framework_simplejwt',

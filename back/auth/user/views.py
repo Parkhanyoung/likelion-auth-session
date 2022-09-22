@@ -12,7 +12,7 @@ import json
 
 
 class PublicUserAPIView(APIView):
-  # 인증과 인가를 요구하지 않음(유저 생성이기 때문에)
+  # 인가를 요구하지 않음(유저 생성이기 때문에)
     permission_classes = []
 
     def post(self, request):
